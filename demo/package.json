@@ -1,0 +1,14 @@
+{
+  "papua": {
+    "title": "burano Demo"
+  },
+  "dependencies": {
+    "exmpl": "^2.2.0",
+    "papua": "^0.1.20",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "localDependencies": {
+    "burano": ".."
+  }
+}

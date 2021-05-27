@@ -1,0 +1,64 @@
+{
+  "name": "burano",
+  "description": "Color Picker for React.",
+  "version": "1.0.0",
+  "repository": "github:tobua/burano",
+  "homepage": "https://tobua.github.io/burano",
+  "license": "MIT",
+  "scripts": {
+    "start": "padua watch",
+    "build": "padua build",
+    "test": "padua test"
+  },
+  "dependencies": {
+    "@react-hook/mouse-position": "^4.1.0",
+    "font-color-contrast": "^1.0.3",
+    "hex-rgb": "^5.0.0",
+    "rgb-hex": "^4.0.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "sideEffects": false,
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.7",
+    "@types/react": "^17.0.8",
+    "padua": "^0.3.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "prettier": "padua/configuration/.prettierrc.json",
+  "eslintConfig": {
+    "extends": "./node_modules/padua/configuration/eslint.cjs"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsconfig": "./tsconfig.json"
+      }
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.jsx?$": [
+        "babel-jest",
+        {
+          "configFile": "./node_modules/padua/configuration/.babelrc"
+        }
+      ]
+    },
+    "transformIgnorePatterns": [
+      "node_modules/cint"
+    ]
+  },
+  "engines": {
+    "node": ">= 14"
+  }
+}
