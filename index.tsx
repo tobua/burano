@@ -4,6 +4,10 @@ import hexToRgb from 'hex-rgb'
 import rgbHex from 'rgb-hex'
 import contrast from 'font-color-contrast'
 
+const wrapperStyles = {
+  width: 200,
+}
+
 const inputStyles = ({ hasError }: { hasError: boolean }) => ({
   borderRadius: 5,
   paddingTop: 2,
@@ -359,11 +363,20 @@ const Board = ({
 }
 
 interface Props {
-  color: string
+  color?: string
   onColor: (color: string) => void
+  style?: React.CSSProperties
+  input?: boolean
+  palette?: boolean
 }
 
-export const ColorPicker = ({ color, onColor }: Props) => {
+export const ColorPicker = ({
+  color = '#000000',
+  onColor,
+  style = {},
+  input = true,
+  palette = true,
+}: Props) => {
   const boardRef = useRef<HTMLDivElement>(null)
   const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 })
   const [boardColor, setBoardColor] = useState(color)
@@ -373,7 +386,7 @@ export const ColorPicker = ({ color, onColor }: Props) => {
   const height = boardRef.current?.offsetHeight
 
   return (
-    <>
+    <div style={{ ...wrapperStyles, ...style }}>
       <Board
         boardRef={boardRef}
         lastPosition={lastPosition}
@@ -413,38 +426,42 @@ export const ColorPicker = ({ color, onColor }: Props) => {
           }}
         />
       </div>
-      <input
-        style={{
-          ...inputStyles({ hasError: false }),
-          width: 'calc(100% - 10px)',
-          background: color,
-          color: contrast(color),
-        }}
-        type="string"
-        value={color}
-        onChange={(event) => setBoardColor(event.target.value)}
-      />
-      <div style={popularWrapper}>
-        {popularColors.map((currentColor) => (
-          <button
-            key={currentColor}
-            type="button"
-            aria-label={`Select ${currentColor} color`}
-            style={popular(currentColor)}
-            onClick={() => {
-              const boardMatchedColor = calculateHandleColor(
-                currentColor,
-                lastPosition.x,
-                lastPosition.y,
-                width,
-                height
-              )
-              setBoardColor(currentColor)
-              onColor(boardMatchedColor)
-            }}
-          />
-        ))}
-      </div>
-    </>
+      {input && (
+        <input
+          style={{
+            ...inputStyles({ hasError: false }),
+            width: 'calc(100% - 10px)',
+            background: color,
+            color: contrast(color),
+          }}
+          type="string"
+          value={color}
+          onChange={(event) => setBoardColor(event.target.value)}
+        />
+      )}
+      {palette && (
+        <div style={popularWrapper}>
+          {popularColors.map((currentColor) => (
+            <button
+              key={currentColor}
+              type="button"
+              aria-label={`Select ${currentColor} color`}
+              style={popular(currentColor)}
+              onClick={() => {
+                const boardMatchedColor = calculateHandleColor(
+                  currentColor,
+                  lastPosition.x,
+                  lastPosition.y,
+                  width,
+                  height
+                )
+                setBoardColor(currentColor)
+                onColor(boardMatchedColor)
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
