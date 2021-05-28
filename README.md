@@ -1,5 +1,7 @@
 # burano
 
+<img align="right" src="https://github.com/tobua/burano/raw/main/logo.png" width="20%" alt="burano Color Picker" />
+
 Color Picker for React.
 
 ## Installation & Usage
