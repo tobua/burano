@@ -1,8 +1,8 @@
+<img align="right" src="https://github.com/tobua/burano/raw/main/logo.png" width="15%" alt="burano Color Picker" />
+
 # burano
 
-<img align="right" src="https://github.com/tobua/burano/raw/main/logo.png" width="20%" alt="burano Color Picker" />
-
-Color Picker for React.
+🎨 Color Picker for React.
 
 ## Installation & Usage
 
@@ -11,6 +11,7 @@ npm install burano
 ```
 
 ```tsx
+import React, { useState } from 'react'
 import { ColorPicker } from 'burano'
 
 export const MyPicker = () => {

@@ -85,6 +85,7 @@ export const Board = ({
   return (
     <div
       ref={boardRef}
+      title="board"
       role="button"
       tabIndex={0}
       onMouseUp={() => {
