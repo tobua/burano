@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { CSSProperties, useState } from 'react'
 
 const rangeWrapper = {
   marginTop: 10,
@@ -12,11 +12,30 @@ const rangeBackgroundWrapper = {
   flexDirection: 'row' as 'row',
 }
 
-const rangeBackground = (from: string, to: string) => ({
-  width: 'calc(100% / 6)',
-  height: 10,
-  backgroundImage: `linear-gradient(to right, ${from} 0%, ${to} 100%)`,
-})
+const rangeBackground = (
+  from: string,
+  to: string,
+  first: boolean,
+  last: boolean
+) => {
+  const styles: CSSProperties = {
+    width: 'calc(100% / 6)',
+    height: 10,
+    backgroundImage: `linear-gradient(to right, ${from} 0%, ${to} 100%)`,
+  }
+
+  if (first) {
+    styles.borderBottomLeftRadius = 5
+    styles.borderTopLeftRadius = 5
+  }
+
+  if (last) {
+    styles.borderBottomRightRadius = 5
+    styles.borderTopRightRadius = 5
+  }
+
+  return styles
+}
 
 const rangeInput = {
   position: 'absolute' as 'absolute',
@@ -38,25 +57,25 @@ const rangeThumbCrossBrowserStyles = (color: string) => `
   width: 16px;
   `
 
-const rangeThumbStyles = (color: string) => `
-  .colua__range {
+const rangeThumbStyles = (className: string, color: string) => `
+  .${className} {
     -webkit-appearance: none;
   }
   
   /* combining below selectors will not work. */
-  .colua__range::-webkit-slider-thumb {
+  .${className}::-webkit-slider-thumb {
   ${rangeThumbCrossBrowserStyles(color)}
     -webkit-appearance: none; /* Required for Safari */
     appearance: none;
   }
   
-  .colua__range::-moz-range-thumb {
+  .${className}::-moz-range-thumb {
   ${rangeThumbCrossBrowserStyles(color)}
     height: 14px;
     width: 14px;
   }
   
-  .colua__range::-ms-thumb {
+  .${className}::-ms-thumb {
   ${rangeThumbCrossBrowserStyles(color)}
   }
   `
@@ -122,15 +141,24 @@ const sliderValueToRGB = (value: number) => {
   return `#${toHex(slide[0])}${toHex(slide[1])}${toHex(slide[2])}`
 }
 
-export const Slider = ({ setBoardColor }) => {
+interface ISlider {
+  setBoardColor: (value: string) => void
+}
+
+export const Slider = ({ setBoardColor }: ISlider) => {
   const [sliderValue, setSliderValue] = useState(0)
+  // Random ID as classname to allow multiple pickers on the page.
+  const [rangeClassName] = useState(Math.random().toString(36).substring(5))
 
   return (
     <>
       <style
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
-          __html: rangeThumbStyles(sliderValueToRGB(sliderValue)),
+          __html: rangeThumbStyles(
+            rangeClassName,
+            sliderValueToRGB(sliderValue)
+          ),
         }}
       />
       <div style={rangeWrapper}>
@@ -138,12 +166,17 @@ export const Slider = ({ setBoardColor }) => {
           {rgbSliderHex.slice(0, -1).map((current, index) => (
             <div
               key={index}
-              style={rangeBackground(current, rgbSliderHex[index + 1])}
+              style={rangeBackground(
+                current,
+                rgbSliderHex[index + 1],
+                index === 0,
+                index === rgbSliderHex.length - 2
+              )}
             />
           ))}
         </div>
         <input
-          className="colua__range"
+          className={rangeClassName}
           style={rangeInput}
           type="range"
           value={sliderValue}

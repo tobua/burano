@@ -1,6 +1,7 @@
 {
   "papua": {
-    "title": "burano Demo"
+    "title": "burano Demo",
+    "icon": "../logo.png"
   },
   "dependencies": {
     "babel-plugin-add-import-extension": "^1.5.1",
