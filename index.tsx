@@ -25,10 +25,12 @@ export const ColorPicker = ({
 }: Props) => {
   const boardRef = useRef<HTMLDivElement>(null)
   const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 })
+  const [currentColor, setCurrentColor] = useState(color)
   const [boardColor, setBoardColor] = useState(color)
 
-  const width = boardRef.current?.offsetWidth
-  const height = boardRef.current?.offsetHeight
+  // Ref initially not available, but fallback values fine as initial calculation at 0.
+  const width = boardRef.current?.offsetWidth ?? 100
+  const height = boardRef.current?.offsetHeight ?? 100
 
   return (
     <div style={{ ...wrapperStyles, ...style }}>
@@ -37,15 +39,24 @@ export const ColorPicker = ({
         lastPosition={lastPosition}
         setLastPosition={setLastPosition}
         boardColor={boardColor}
-        setColor={onColor}
+        setCurrentColor={setCurrentColor}
+        onColor={onColor}
         width={width}
         height={height}
       />
-      <Slider setBoardColor={setBoardColor} />
-      {input && <Input color={color} setBoardColor={setBoardColor} />}
+      <Slider
+        onColor={onColor}
+        setCurrentColor={setCurrentColor}
+        setBoardColor={setBoardColor}
+        width={width}
+        height={height}
+        lastPosition={lastPosition}
+      />
+      {input && <Input color={currentColor} setBoardColor={setBoardColor} />}
       {palette && (
         <Palette
           onColor={onColor}
+          setCurrentColor={setCurrentColor}
           setBoardColor={setBoardColor}
           width={width}
           height={height}

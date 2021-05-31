@@ -10,6 +10,7 @@ const board = (selectedColor: string, mouseDown: boolean) => ({
   backgroundColor: selectedColor,
   backgroundImage: `linear-gradient(to right, transparent 0%, #FFFFFF 100%)`,
   outline: 'none',
+  borderRadius: 5,
 })
 
 const boardOverlay = {
@@ -17,6 +18,7 @@ const boardOverlay = {
   backgroundImage: `linear-gradient(to top, #000000 0%, transparent 100%)`,
   width: '100%',
   height: '100%',
+  borderRadius: 5,
 }
 
 const boardHandle = (
@@ -41,23 +43,27 @@ const boardHandle = (
 // used as a fallback.
 let lastMousePosition = { x: 0, y: 0 }
 
+interface BoardProps {
+  boardRef: React.MutableRefObject<HTMLDivElement>
+  lastPosition: { x: number; y: number }
+  setLastPosition: React.Dispatch<any>
+  boardColor: string
+  onColor: (color: string) => void
+  setCurrentColor: (value: string) => void
+  width: number
+  height: number
+}
+
 export const Board = ({
   boardRef,
   lastPosition,
   setLastPosition,
   boardColor,
-  setColor,
+  onColor,
+  setCurrentColor,
   width,
   height,
-}: {
-  boardRef: React.MutableRefObject<HTMLDivElement>
-  lastPosition: { x: number; y: number }
-  setLastPosition: React.Dispatch<any>
-  boardColor: string
-  setColor: (color: string) => void
-  width: number
-  height: number
-}) => {
+}: BoardProps) => {
   const mouse = useMouse(boardRef)
 
   let handleX = lastPosition.x
@@ -97,7 +103,8 @@ export const Board = ({
         )
 
         setLastPosition({ x: nextHandleX, y: nextHandleY })
-        setColor(handleColor)
+        setCurrentColor(handleColor)
+        onColor(handleColor)
       }}
       style={board(boardColor, mouse.isDown)}
     >

@@ -1,4 +1,5 @@
 import React, { CSSProperties, useState } from 'react'
+import { calculateHandleColor } from './helper'
 
 const rangeWrapper = {
   marginTop: 10,
@@ -142,25 +143,33 @@ const sliderValueToRGB = (value: number) => {
 }
 
 interface ISlider {
+  onColor: (value: string) => void
+  setCurrentColor: (value: string) => void
   setBoardColor: (value: string) => void
+  lastPosition: { x: number; y: number }
+  width: number
+  height: number
 }
 
-export const Slider = ({ setBoardColor }: ISlider) => {
+export const Slider = ({
+  onColor,
+  setCurrentColor,
+  setBoardColor,
+  lastPosition,
+  width,
+  height,
+}: ISlider) => {
   const [sliderValue, setSliderValue] = useState(0)
   // Random ID as classname to allow multiple pickers on the page.
-  const [rangeClassName] = useState(Math.random().toString(36).substring(5))
+  const [rangeClassName] = useState(
+    `b_${Math.random().toString(36).substring(5)}`
+  )
 
   return (
     <>
-      <style
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{
-          __html: rangeThumbStyles(
-            rangeClassName,
-            sliderValueToRGB(sliderValue)
-          ),
-        }}
-      />
+      <style>
+        {rangeThumbStyles(rangeClassName, sliderValueToRGB(sliderValue))}
+      </style>
       <div style={rangeWrapper}>
         <div style={rangeBackgroundWrapper}>
           {rgbSliderHex.slice(0, -1).map((current, index) => (
@@ -184,9 +193,19 @@ export const Slider = ({ setBoardColor }: ISlider) => {
           max="1530"
           onChange={(event) => {
             const targetValue = Number(event.target.value)
+            const sliderColor = sliderValueToRGB(targetValue)
+            const boardMatchedColor = calculateHandleColor(
+              sliderColor,
+              lastPosition.x,
+              lastPosition.y,
+              width,
+              height
+            )
 
             setSliderValue(targetValue)
-            setBoardColor(sliderValueToRGB(targetValue))
+            setCurrentColor(boardMatchedColor)
+            setBoardColor(sliderColor)
+            onColor(boardMatchedColor)
           }}
         />
       </div>

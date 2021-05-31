@@ -6,6 +6,8 @@ const wrapperStyles = {
   flexDirection: 'row' as 'row',
   flexWrap: 'wrap' as 'wrap',
   marginTop: 10,
+  borderRadius: 5,
+  overflow: 'hidden',
 }
 
 const paletteStyles = (background: string) => ({
@@ -19,13 +21,23 @@ const paletteStyles = (background: string) => ({
   cursor: 'pointer',
 })
 
+interface PaletteProps {
+  onColor: (color: string) => void
+  setCurrentColor: (value: string) => void
+  setBoardColor: (color: string) => void
+  lastPosition: { x: number; y: number }
+  width: number
+  height: number
+}
+
 export const Palette = ({
   onColor,
+  setCurrentColor,
   setBoardColor,
   width,
   height,
   lastPosition,
-}) => (
+}: PaletteProps) => (
   <div style={wrapperStyles}>
     {popularColors.map((currentColor) => (
       <button
@@ -42,6 +54,7 @@ export const Palette = ({
             height
           )
           setBoardColor(currentColor)
+          setCurrentColor(boardMatchedColor)
           onColor(boardMatchedColor)
         }}
       />
