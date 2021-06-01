@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Input } from './input'
 import { Palette } from './palette'
 import { Board } from './board'
@@ -27,6 +27,11 @@ export const ColorPicker = ({
   const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 })
   const [currentColor, setCurrentColor] = useState(color)
   const [boardColor, setBoardColor] = useState(color)
+
+  // Update color upon changes from outside.
+  useEffect(() => {
+    setCurrentColor(color)
+  }, [color])
 
   // Ref initially not available, but fallback values fine as initial calculation at 0.
   const width = boardRef.current?.offsetWidth ?? 100

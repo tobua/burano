@@ -32,3 +32,9 @@ export const MyPicker = () => {
     palette={boolean} // Show color palette, default true.
 />
 ```
+
+<br />
+<br />
+<p align="center">
+  <img src="https://github.com/tobua/burano/raw/main/burano.svg" alt="Burano island" width="100%">
+</p>

@@ -41,7 +41,8 @@ const boardHandle = (
 
 // Store last mouse position on every render, in case the mouse leaves the tracked window this is
 // used as a fallback.
-let lastMousePosition = { x: 0, y: 0 }
+const lastMousePosition = new Map<HTMLElement, { x: number; y: number }>()
+// let lastMousePosition: {[key: HTMLElement]: { x: number, y: number }} = {}
 
 interface BoardProps {
   boardRef: React.MutableRefObject<HTMLDivElement>
@@ -66,6 +67,10 @@ export const Board = ({
 }: BoardProps) => {
   const mouse = useMouse(boardRef)
 
+  if (!lastMousePosition.has(boardRef.current)) {
+    lastMousePosition.set(boardRef.current, { x: 0, y: 0 })
+  }
+
   let handleX = lastPosition.x
   let handleY = lastPosition.y
 
@@ -74,10 +79,11 @@ export const Board = ({
     // Let mouse outside, but still match cursor position inside the board.
     ;[handleX, handleY] = ensureInBounds(mouse.x, mouse.y, width, height)
 
-    lastMousePosition = { x: handleX, y: handleY }
+    lastMousePosition.set(boardRef.current, { x: handleX, y: handleY })
   } else {
-    handleX = lastMousePosition.x
-    handleY = lastMousePosition.y
+    const currentLastMousePosition = lastMousePosition.get(boardRef.current)
+    handleX = currentLastMousePosition.x
+    handleY = currentLastMousePosition.y
   }
 
   const handleColor = calculateHandleColor(
