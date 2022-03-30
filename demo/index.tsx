@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { Exmpl, Grid, Code } from 'exmpl'
 import { ColorPicker } from 'burano'
 
@@ -9,7 +9,7 @@ const Basic = () => {
   return <ColorPicker color={color} onColor={setColor} />
 }
 
-render(
+createRoot(document.body).render(
   <Exmpl title="burano Demo" npm="burano" github="tobua/burano">
     <Basic />
     <Code>
@@ -49,6 +49,5 @@ const MyPicker = <ColorPicker color="#FF00FF" onColor={(color) => alert(color)} 
       <ColorPicker palette={false} color="#0000FF" onColor={() => {}} />
     </Grid>
     <Code>{`<ColorPicker input={false} palette={false} />`}</Code>
-  </Exmpl>,
-  document.body
+  </Exmpl>
 )

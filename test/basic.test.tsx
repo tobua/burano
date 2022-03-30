@@ -4,14 +4,10 @@ import { render, act, fireEvent } from '@testing-library/react'
 import { ColorPicker } from '../index'
 
 const getAllByTag = (tag: string, rendered: any) =>
-  rendered.findAllByText(
-    (_, element: HTMLElement) => element.tagName.toLowerCase() === tag
-  )
+  rendered.findAllByText((_, element: HTMLElement) => element.tagName.toLowerCase() === tag)
 
 const getAllByTitle = (title: string, rendered: any) =>
-  rendered.findAllByText(
-    (_, element: HTMLElement) => element.getAttribute('title') === title
-  )
+  rendered.findAllByText((_, element: HTMLElement) => element.getAttribute('title') === title)
 
 test('Initial color reflected in input.', async () => {
   const onChangeMock = jest.fn()
@@ -21,9 +17,7 @@ test('Initial color reflected in input.', async () => {
 
   expect(onChangeMock.mock.calls.length).toBe(0)
 
-  const colorInput = (
-    await getAllByTag('input', rendered)
-  )[1] as HTMLInputElement
+  const colorInput = (await getAllByTag('input', rendered))[1] as HTMLInputElement
 
   expect(colorInput.tagName.toLowerCase()).toEqual('input')
   expect(colorInput.value).toEqual('#FF00FF')
@@ -32,7 +26,7 @@ test('Initial color reflected in input.', async () => {
 test('Outside changes to color are reflected.', async () => {
   const onChangeMock = jest.fn()
   let setColor
-  const Component = () => {
+  function Component() {
     const [color, setColorHandler] = useState('#FF00FF')
 
     setColor = setColorHandler
@@ -63,9 +57,7 @@ test('Outside changes to color are reflected.', async () => {
 test('Black used if no color is set.', async () => {
   const rendered = render(<ColorPicker onColor={() => {}} />)
 
-  const colorInput = (
-    await getAllByTag('input', rendered)
-  )[1] as HTMLInputElement
+  const colorInput = (await getAllByTag('input', rendered))[1] as HTMLInputElement
 
   expect(colorInput.tagName.toLowerCase()).toEqual('input')
   expect(colorInput.value).toEqual('#000000')
@@ -79,9 +71,7 @@ test('Color selection on the board is propagated outside.', async () => {
 
   expect(onChangeMock.mock.calls.length).toBe(0)
 
-  const colorInput = (
-    await getAllByTag('input', rendered)
-  )[1] as HTMLInputElement
+  const colorInput = (await getAllByTag('input', rendered))[1] as HTMLInputElement
 
   expect(colorInput.tagName.toLowerCase()).toEqual('input')
   expect(colorInput.value).toEqual('#FF00FF')

@@ -21,12 +21,7 @@ const boardOverlay = {
   borderRadius: 5,
 }
 
-const boardHandle = (
-  background: string,
-  x: number,
-  y: number,
-  mouseDown: boolean
-) => ({
+const boardHandle = (background: string, x: number, y: number, mouseDown: boolean) => ({
   position: 'absolute' as 'absolute',
   cursor: mouseDown ? 'none' : 'pointer',
   top: y - 6,
@@ -55,7 +50,7 @@ interface BoardProps {
   height: number
 }
 
-export const Board = ({
+export function Board({
   boardRef,
   lastPosition,
   setLastPosition,
@@ -64,7 +59,7 @@ export const Board = ({
   setCurrentColor,
   width,
   height,
-}: BoardProps) => {
+}: BoardProps) {
   const mouse = useMouse(boardRef)
 
   if (!lastMousePosition.has(boardRef.current)) {
@@ -86,13 +81,7 @@ export const Board = ({
     handleY = currentLastMousePosition.y
   }
 
-  const handleColor = calculateHandleColor(
-    boardColor,
-    handleX,
-    handleY,
-    width,
-    height
-  )
+  const handleColor = calculateHandleColor(boardColor, handleX, handleY, width, height)
 
   return (
     <div
@@ -101,12 +90,7 @@ export const Board = ({
       role="button"
       tabIndex={0}
       onMouseUp={() => {
-        const [nextHandleX, nextHandleY] = ensureInBounds(
-          mouse.x,
-          mouse.y,
-          width,
-          height
-        )
+        const [nextHandleX, nextHandleY] = ensureInBounds(mouse.x, mouse.y, width, height)
 
         setLastPosition({ x: nextHandleX, y: nextHandleY })
         setCurrentColor(handleColor)

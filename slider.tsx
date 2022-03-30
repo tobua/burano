@@ -13,12 +13,7 @@ const rangeBackgroundWrapper = {
   flexDirection: 'row' as 'row',
 }
 
-const rangeBackground = (
-  from: string,
-  to: string,
-  first: boolean,
-  last: boolean
-) => {
+const rangeBackground = (from: string, to: string, first: boolean, last: boolean) => {
   const styles: CSSProperties = {
     width: 'calc(100% / 6)',
     height: 10,
@@ -91,15 +86,7 @@ const rgbSlider = [
   [255, 0, 0], // Red
 ]
 
-const rgbSliderHex = [
-  '#FF0000',
-  '#FFFF00',
-  '#00FF00',
-  '#00FFFF',
-  '#0000FF',
-  '#FF00FF',
-  '#FF0000',
-]
+const rgbSliderHex = ['#FF0000', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#FF00FF', '#FF0000']
 
 const indexToChange = (slideIndex: number) => {
   const modulo = slideIndex % 3
@@ -116,9 +103,7 @@ const indexToChange = (slideIndex: number) => {
 }
 
 const operationByIndex = (slideIndex: number) =>
-  slideIndex % 2 === 0
-    ? (a: number, b: number) => a + b
-    : (a: number, b: number) => a - b
+  slideIndex % 2 === 0 ? (a: number, b: number) => a + b : (a: number, b: number) => a - b
 
 const toHex = (value: number) => {
   const result = value.toString(16).toUpperCase()
@@ -161,15 +146,11 @@ export const Slider = ({
 }: ISlider) => {
   const [sliderValue, setSliderValue] = useState(0)
   // Random ID as classname to allow multiple pickers on the page.
-  const [rangeClassName] = useState(
-    `b_${Math.random().toString(36).substring(5)}`
-  )
+  const [rangeClassName] = useState(`b_${Math.random().toString(36).substring(5)}`)
 
   return (
     <>
-      <style>
-        {rangeThumbStyles(rangeClassName, sliderValueToRGB(sliderValue))}
-      </style>
+      <style>{rangeThumbStyles(rangeClassName, sliderValueToRGB(sliderValue))}</style>
       <div style={rangeWrapper}>
         <div style={rangeBackgroundWrapper}>
           {rgbSliderHex.slice(0, -1).map((current, index) => (

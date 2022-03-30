@@ -1,39 +1,46 @@
 {
   "name": "burano",
   "description": "Color Picker for React.",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "repository": "github:tobua/burano",
   "homepage": "https://tobua.github.io/burano",
   "license": "MIT",
   "scripts": {
-    "start": "padua watch",
     "build": "padua build",
+    "start": "padua watch",
     "test": "padua test"
   },
   "dependencies": {
-    "@react-hook/mouse-position": "^4.1.0",
-    "font-color-contrast": "^1.0.3",
+    "@react-hook/mouse-position": "^4.1.3",
+    "font-color-contrast": "^11.1.0",
     "hex-rgb": "^5.0.0",
     "rgb-hex": "^4.0.0"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "type": "module",
-  "main": "dist/index.js",
   "sideEffects": false,
+  "main": "dist/index.js",
+  "exports": {
+    "default": "./dist/index.js"
+  },
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "keywords": [
+    "color",
+    "picker"
+  ],
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.7",
-    "@types/react": "^17.0.8",
-    "padua": "^0.3.6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "@testing-library/jest-dom": "^5.16.3",
+    "@testing-library/react": "^12.1.4",
+    "@types/react": "^17.0.43",
+    "padua": "^0.5.4",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "prettier": "padua/configuration/.prettierrc.json",
   "eslintConfig": {

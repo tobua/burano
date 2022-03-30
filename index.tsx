@@ -16,13 +16,13 @@ interface Props {
   palette?: boolean
 }
 
-export const ColorPicker = ({
+export function ColorPicker({
   color = '#000000',
   onColor,
   style = {},
   input = true,
   palette = true,
-}: Props) => {
+}: Props) {
   const boardRef = useRef<HTMLDivElement>(null)
   const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 })
   const [currentColor, setCurrentColor] = useState(color)

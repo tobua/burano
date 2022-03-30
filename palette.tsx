@@ -30,34 +30,36 @@ interface PaletteProps {
   height: number
 }
 
-export const Palette = ({
+export function Palette({
   onColor,
   setCurrentColor,
   setBoardColor,
   width,
   height,
   lastPosition,
-}: PaletteProps) => (
-  <div style={wrapperStyles}>
-    {popularColors.map((currentColor) => (
-      <button
-        key={currentColor}
-        type="button"
-        aria-label={`Select ${currentColor} color`}
-        style={paletteStyles(currentColor)}
-        onClick={() => {
-          const boardMatchedColor = calculateHandleColor(
-            currentColor,
-            lastPosition.x,
-            lastPosition.y,
-            width,
-            height
-          )
-          setBoardColor(currentColor)
-          setCurrentColor(boardMatchedColor)
-          onColor(boardMatchedColor)
-        }}
-      />
-    ))}
-  </div>
-)
+}: PaletteProps) {
+  return (
+    <div style={wrapperStyles}>
+      {popularColors.map((currentColor) => (
+        <button
+          key={currentColor}
+          type="button"
+          aria-label={`Select ${currentColor} color`}
+          style={paletteStyles(currentColor)}
+          onClick={() => {
+            const boardMatchedColor = calculateHandleColor(
+              currentColor,
+              lastPosition.x,
+              lastPosition.y,
+              width,
+              height
+            )
+            setBoardColor(currentColor)
+            setCurrentColor(boardMatchedColor)
+            onColor(boardMatchedColor)
+          }}
+        />
+      ))}
+    </div>
+  )
+}

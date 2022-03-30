@@ -1,23 +1,13 @@
 import hexToRgb from 'hex-rgb'
 import rgbHex from 'rgb-hex'
 
-const whitenByPercentage = (
-  red: number,
-  green: number,
-  blue: number,
-  percentage: number
-) => ({
+const whitenByPercentage = (red: number, green: number, blue: number, percentage: number) => ({
   red: red + (255 - red) * percentage,
   green: green + (255 - green) * percentage,
   blue: blue + (255 - blue) * percentage,
 })
 
-const blackenByPercentage = (
-  red: number,
-  green: number,
-  blue: number,
-  percentage: number
-) => ({
+const blackenByPercentage = (red: number, green: number, blue: number, percentage: number) => ({
   red: red - red * percentage,
   green: green - green * percentage,
   blue: blue - blue * percentage,
@@ -36,19 +26,9 @@ export const calculateHandleColor = (
   // Fully at the bottom will add (or remove) 100% black.
   const blackPercentage = handleY / height
 
-  rgbColor = whitenByPercentage(
-    rgbColor.red,
-    rgbColor.green,
-    rgbColor.blue,
-    whitePercentage
-  )
+  rgbColor = whitenByPercentage(rgbColor.red, rgbColor.green, rgbColor.blue, whitePercentage)
 
-  rgbColor = blackenByPercentage(
-    rgbColor.red,
-    rgbColor.green,
-    rgbColor.blue,
-    blackPercentage
-  )
+  rgbColor = blackenByPercentage(rgbColor.red, rgbColor.green, rgbColor.blue, blackPercentage)
 
   return `#${rgbHex(rgbColor.red, rgbColor.green, rgbColor.blue).toUpperCase()}`
 }
@@ -77,12 +57,7 @@ export const popularColors = [
 ]
 
 // Return x and y between 0 and max values provided.
-export const ensureInBounds = (
-  x: number,
-  y: number,
-  maxX: number,
-  maxY: number
-) => {
+export const ensureInBounds = (x: number, y: number, maxX: number, maxY: number) => {
   let resultX = x
   let resultY = y
 

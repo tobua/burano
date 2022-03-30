@@ -1,5 +1,8 @@
 import React from 'react'
-import contrast from 'font-color-contrast'
+import fontColor from 'font-color-contrast'
+
+// @ts-ignore Plugin missing proper ES Module support.
+const contrast = typeof fontColor === 'function' ? fontColor : fontColor.default
 
 const inputStyles = ({ hasError }: { hasError: boolean }) => ({
   borderRadius: 5,
@@ -12,22 +15,24 @@ const inputStyles = ({ hasError }: { hasError: boolean }) => ({
   color: hasError ? 'red' : 'black',
 })
 
-export const Input = ({
+export function Input({
   color,
   setBoardColor,
 }: {
   color: string
   setBoardColor: (value: string) => void
-}) => (
-  <input
-    style={{
-      ...inputStyles({ hasError: false }),
-      width: 'calc(100% - 10px)',
-      background: color,
-      color: contrast(color),
-    }}
-    type="string"
-    value={color}
-    onChange={(event) => setBoardColor(event.target.value)}
-  />
-)
+}) {
+  return (
+    <input
+      style={{
+        ...inputStyles({ hasError: false }),
+        width: 'calc(100% - 10px)',
+        background: color,
+        color: contrast(color),
+      }}
+      type="string"
+      value={color}
+      onChange={(event) => setBoardColor(event.target.value)}
+    />
+  )
+}

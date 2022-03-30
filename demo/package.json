@@ -4,11 +4,10 @@
     "icon": "../logo.png"
   },
   "dependencies": {
-    "babel-plugin-add-import-extension": "^1.5.1",
-    "exmpl": "^2.2.0",
-    "papua": "^0.1.20",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "exmpl": "^3.0.0",
+    "papua": "^1.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "localDependencies": {
     "burano": ".."
