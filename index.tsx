@@ -16,6 +16,8 @@ interface Props {
   palette?: boolean
 }
 
+export { contrast } from './input'
+
 export function ColorPicker({
   color = '#000000',
   onColor,

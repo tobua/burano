@@ -1,8 +1,41 @@
 import React from 'react'
-import fontColor from 'font-color-contrast'
 
-// @ts-ignore Plugin missing proper ES Module support.
-const contrast = typeof fontColor === 'function' ? fontColor : fontColor.default
+const getCleanStringAndHexNum = (input: string) => {
+  const cleanRegex = input.replace(/(#|\s)/gi, '')
+  if (cleanRegex.length !== 3 && cleanRegex.length !== 6) return false
+  return cleanRegex
+}
+
+// Taken from: https://github.com/russoedu/font-color-contrast (MIT)
+export const contrast = (input: string, threshold = 0.5) => {
+  const color = getCleanStringAndHexNum(input)
+
+  if (!color) {
+    console.warn(`Invalid color "${input}" supplied to contrast().`)
+    return '#000000'
+  }
+
+  const rgb = { red: 0, green: 0, blue: 0 }
+
+  switch (color.length) {
+    case 3:
+      rgb.red = parseInt(color[0].repeat(2), 16)
+      rgb.green = parseInt(color[1].repeat(2), 16)
+      rgb.blue = parseInt(color[2].repeat(2), 16)
+      break
+    default:
+      rgb.red = parseInt(color.substring(0, 2), 16)
+      rgb.green = parseInt(color.substring(2, 4), 16)
+      rgb.blue = parseInt(color.substring(4, 6), 16)
+      break
+  }
+
+  const result = Math.sqrt(
+    0.299 * (rgb.red / 255) ** 2 + 0.587 * (rgb.green / 255) ** 2 + 0.114 * (rgb.blue / 255) ** 2
+  )
+
+  return result > threshold ? '#000000' : '#ffffff'
+}
 
 const inputStyles = ({ hasError }: { hasError: boolean }) => ({
   borderRadius: 5,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '@testing-library/jest-dom'
 import { render, act, fireEvent } from '@testing-library/react'
-import { ColorPicker } from '../index'
+import { ColorPicker, contrast } from '../index'
 
 const getAllByTag = (tag: string, rendered: any) =>
   rendered.findAllByText((_, element: HTMLElement) => element.tagName.toLowerCase() === tag)
@@ -88,4 +88,17 @@ test('Color selection on the board is propagated outside.', async () => {
   expect(onChangeMock.mock.calls.length).toBe(1)
 
   // NOTE cannot test color change as mouse not available in jest.
+})
+
+test('contrast is separately exported and can be used for standalone usage.', () => {
+  expect(contrast('#111111')).toEqual('#ffffff')
+  expect(contrast('#ebebeb')).toEqual('#000000')
+  expect(contrast('#FFFFFF')).toEqual('#000000')
+  expect(contrast('#000000')).toEqual('#ffffff')
+  expect(contrast('#7f96fc')).toEqual('#000000')
+  expect(contrast('#10257f')).toEqual('#ffffff')
+  // Shortcut colors.
+  expect(contrast('#AAA')).toEqual('#000000')
+  expect(contrast('#00A')).toEqual('#ffffff')
+  expect(contrast('#FFA')).toEqual('#000000')
 })

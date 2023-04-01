@@ -5,9 +5,9 @@
   },
   "dependencies": {
     "exmpl": "^3.0.0",
-    "papua": "^1.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "papua": "^3.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "localDependencies": {
     "burano": ".."
