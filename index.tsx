@@ -59,7 +59,7 @@ export function ColorPicker({
         height={height}
         lastPosition={lastPosition}
       />
-      {input && <Input color={currentColor} setBoardColor={setBoardColor} />}
+      {input && <Input color={currentColor} setBoardColor={setBoardColor} onColor={onColor} />}
       {palette && (
         <Palette
           onColor={onColor}

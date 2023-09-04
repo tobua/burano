@@ -1,4 +1,7 @@
+// @vitest-environment happy-dom
+
 import React, { useState } from 'react'
+import { test, expect, vi } from 'vitest'
 import '@testing-library/jest-dom'
 import { render, act, fireEvent } from '@testing-library/react'
 import { ColorPicker, contrast } from '../index'
@@ -10,7 +13,7 @@ const getAllByTitle = (title: string, rendered: any) =>
   rendered.findAllByText((_, element: HTMLElement) => element.getAttribute('title') === title)
 
 test('Initial color reflected in input.', async () => {
-  const onChangeMock = jest.fn()
+  const onChangeMock = vi.fn()
   const Component = <ColorPicker color="#FF00FF" onColor={onChangeMock} />
 
   const rendered = render(Component)
@@ -24,7 +27,7 @@ test('Initial color reflected in input.', async () => {
 })
 
 test('Outside changes to color are reflected.', async () => {
-  const onChangeMock = jest.fn()
+  const onChangeMock = vi.fn()
   let setColor
   function Component() {
     const [color, setColorHandler] = useState('#FF00FF')
@@ -64,7 +67,7 @@ test('Black used if no color is set.', async () => {
 })
 
 test('Color selection on the board is propagated outside.', async () => {
-  const onChangeMock = jest.fn()
+  const onChangeMock = vi.fn()
   const Component = <ColorPicker color="#FF00FF" onColor={onChangeMock} />
 
   const rendered = render(Component)
@@ -87,7 +90,7 @@ test('Color selection on the board is propagated outside.', async () => {
 
   expect(onChangeMock.mock.calls.length).toBe(1)
 
-  // NOTE cannot test color change as mouse not available in jest.
+  // NOTE cannot test color change as mouse not available in testing environment.
 })
 
 test('contrast is separately exported and can be used for standalone usage.', () => {
@@ -101,4 +104,26 @@ test('contrast is separately exported and can be used for standalone usage.', ()
   expect(contrast('#AAA')).toEqual('#000000')
   expect(contrast('#00A')).toEqual('#ffffff')
   expect(contrast('#FFA')).toEqual('#000000')
+})
+
+test('Invalid inputs entered into the input field will not be passed out.', async () => {
+  const onChangeMock = vi.fn()
+  const Component = <ColorPicker color="#FF00FF" onColor={onChangeMock} />
+
+  const rendered = render(Component)
+
+  expect(onChangeMock.mock.calls.length).toBe(0)
+
+  const colorInput = (await getAllByTag('input', rendered))[1] as HTMLInputElement
+
+  expect(colorInput.tagName.toLowerCase()).toEqual('input')
+  expect(colorInput.value).toEqual('#FF00FF')
+  expect(colorInput.style.borderColor).toBe('black')
+
+  act(() => {
+    fireEvent.change(colorInput, { target: { value: '#FF00F' } })  
+  })
+
+  // NOTE for some reason does not call onChange on the input and therefore not update state.
+  expect(colorInput.value).toEqual('#FF00F')
 })

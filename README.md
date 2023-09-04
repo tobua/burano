@@ -36,5 +36,5 @@ export const MyPicker = () => {
 <br />
 <br />
 <p align="center">
-  <img src="https://github.com/tobua/burano/raw/main/burano.svg" alt="Burano island" width="100%">
+  <img src="https://github.com/tobua/burano/raw/main/burano.png" alt="Burano island generated with hotpot.ai" width="300">
 </p>

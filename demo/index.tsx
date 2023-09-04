@@ -6,7 +6,12 @@ import { ColorPicker } from 'burano'
 const Basic = () => {
   const [color, setColor] = useState('#FF00FF')
 
-  return <ColorPicker color={color} onColor={setColor} />
+  return (
+    <div style={{ display: 'flex', gap: 20 }}>
+      <ColorPicker color={color} onColor={setColor} />
+      <p>Current: {color}</p>
+    </div>
+  )
 }
 
 createRoot(document.body).render(
